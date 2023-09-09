@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/analytics_screen.dart';
 import 'package:flutter_github_app/screens/home_screen.dart';
@@ -54,7 +55,7 @@ class _AppContainerState extends State<AppContainer> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black38,
+              color: secondaryColor,
               spreadRadius: 0,
               blurRadius: 5,
             ),
@@ -68,10 +69,9 @@ class _AppContainerState extends State<AppContainer> {
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: currentTabIndex,
-            backgroundColor: Colors.white,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Iconsax.home_2),
+                icon: Icon(Iconsax.home_1),
                 label: 'Home',
               ),
               BottomNavigationBarItem(

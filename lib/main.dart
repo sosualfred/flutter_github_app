@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/app_container.dart';
 
@@ -17,6 +18,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+          selectedItemColor: primaryColor,
+          unselectedItemColor: secondaryColor,
+        ),
       ),
       navigatorKey: outerAppNavKey,
       routes: {
