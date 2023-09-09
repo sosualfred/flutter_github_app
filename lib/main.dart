@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
           secondary: secondaryColor,
         ),
         useMaterial3: false,
+        scaffoldBackgroundColor: grey100,
         appBarTheme: const AppBarTheme(
           backgroundColor: grey100,
           foregroundColor: grey600,
@@ -55,7 +56,6 @@ class MyApp extends StatelessWidget {
             size: 28,
           ),
         ),
-        scaffoldBackgroundColor: grey100,
         tabBarTheme: const TabBarTheme(
           labelColor: primaryColor,
           unselectedLabelColor: grey400,

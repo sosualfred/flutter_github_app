@@ -9,3 +9,7 @@ const grey200 = Color(0xFFF0F0F0);
 const grey400 = Color(0xFFA7A7A7);
 const grey500 = Color(0xFF808080);
 const grey600 = Color(0xFF656565);
+const grey800 = Color(0xFF1F1F1F);
+
+const appBlue = Color(0xFF2EA4CA);
+const appGreen = Color(0xFF22A87B);

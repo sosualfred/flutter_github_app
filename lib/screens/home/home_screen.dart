@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
+import 'package:flutter_github_app/screens/home/sections/repos_tab_view.dart';
+import 'package:flutter_github_app/screens/home/sections/users_tab_view.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,18 +26,18 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+      body: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: DefaultTabController(
           length: 2,
           initialIndex: 0,
           child: Column(
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 8,
               ),
               // Search Field
-              const TextField(
+              TextField(
                 decoration: InputDecoration(
                   hintText: 'Search',
                   fillColor: whiteColor,
@@ -43,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                   prefixIcon: Icon(
                     Iconsax.search_normal_1,
                     color: secondaryColor,
-                    size: 28,
+                    size: 26,
                   ),
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(
@@ -69,11 +71,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 8,
               ),
               // Tab Bar
-              const SizedBox(
+              SizedBox(
                 width: double.infinity,
                 child: TabBar(
                   isScrollable: true,
@@ -90,34 +92,14 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 16,
               ),
               Expanded(
                 child: TabBarView(
                   children: [
-                    ListView.builder(
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text('User $index'),
-                          ),
-                        );
-                      },
-                    ),
-                    ListView.builder(
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text('Repository $index'),
-                          ),
-                        );
-                      },
-                    ),
+                    UsersTabView(),
+                    ReposTabView(),
                   ],
                 ),
               ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/analytics_screen.dart';
-import 'package:flutter_github_app/screens/home_screen.dart';
+import 'package:flutter_github_app/screens/home/home_screen.dart';
 import 'package:flutter_github_app/screens/settings_screen.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
@@ -21,7 +21,6 @@ class _AppContainerState extends State<AppContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       body: Navigator(
         key: innerAppNavKey,
         initialRoute: HomeScreen.routeName,
