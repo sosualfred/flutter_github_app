@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/app_container.dart';
 
 void main() {
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const AppContainer(),
+      navigatorKey: outerAppNavKey,
+      routes: {
+        AppContainer.routeName: (context) => const AppContainer(),
+      },
     );
   }
 }

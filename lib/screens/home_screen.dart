@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  static const routeName = '/home';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.green,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Home Screen'),
+      ),
+      body: const Center(
+        child: Text('Home Screen'),
+      ),
+    );
+  }
+}
