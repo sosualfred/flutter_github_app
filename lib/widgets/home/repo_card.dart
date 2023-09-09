@@ -72,31 +72,9 @@ class RepoCard extends StatelessWidget {
               height: 8,
             ),
             // Tags Row
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                AppChip(
-                  label: 'javascript',
-                  color: primaryColor,
-                ),
-                AppChip(
-                  label: 'html',
-                  color: primaryColor,
-                ),
-                AppChip(
-                  label: 'css',
-                  color: primaryColor,
-                ),
-                AppChip(
-                  label: 'php',
-                  color: primaryColor,
-                ),
-                AppChip(
-                  label: 'java',
-                  color: primaryColor,
-                ),
-              ],
+            Chips(
+              color: primaryColor,
+              labels: ['javascript', 'html', 'css', 'php', 'java'],
             ),
             SizedBox(
               height: 6,

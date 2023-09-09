@@ -76,23 +76,9 @@ class UserCard extends StatelessWidget {
                 height: 8,
               ),
               // Tags Row
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  AppChip(
-                    label: 'flutter',
-                    color: appBlue,
-                  ),
-                  AppChip(
-                    label: 'frontend',
-                    color: appBlue,
-                  ),
-                  AppChip(
-                    label: 'dart',
-                    color: appBlue,
-                  ),
-                ],
+              Chips(
+                color: appBlue,
+                labels: ['flutter', 'frontend', 'dart'],
               ),
               SizedBox(
                 height: 6,
