@@ -30,17 +30,17 @@ class MyApp extends StatelessWidget {
           centerTitle: false,
           titleTextStyle: TextStyle(
             color: grey600,
-            fontSize: 24,
+            fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
           iconTheme: IconThemeData(
             color: secondaryColor,
-            size: 28,
+            size: 24,
           ),
         ),
         iconTheme: const IconThemeData(
           color: secondaryColor,
-          size: 28,
+          size: 24,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Colors.white,
@@ -49,11 +49,11 @@ class MyApp extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
           selectedIconTheme: IconThemeData(
             color: primaryColor,
-            size: 28,
+            size: 24,
           ),
           unselectedIconTheme: IconThemeData(
             color: secondaryColor,
-            size: 28,
+            size: 24,
           ),
         ),
         tabBarTheme: const TabBarTheme(

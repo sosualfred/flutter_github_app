@@ -78,23 +78,23 @@ class RepoCard extends StatelessWidget {
               children: [
                 AppChip(
                   label: 'javascript',
-                  color: appGreen,
+                  color: primaryColor,
                 ),
                 AppChip(
                   label: 'html',
-                  color: appGreen,
+                  color: primaryColor,
                 ),
                 AppChip(
                   label: 'css',
-                  color: appGreen,
+                  color: primaryColor,
                 ),
                 AppChip(
                   label: 'php',
-                  color: appGreen,
+                  color: primaryColor,
                 ),
                 AppChip(
                   label: 'java',
-                  color: appGreen,
+                  color: primaryColor,
                 ),
               ],
             ),

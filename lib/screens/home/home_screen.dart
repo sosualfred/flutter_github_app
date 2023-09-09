@@ -85,9 +85,11 @@ class HomeScreen extends StatelessWidget {
                   tabs: [
                     Tab(
                       text: 'Users',
+                      height: 32,
                     ),
                     Tab(
                       text: 'Repositories',
+                      height: 32,
                     ),
                   ],
                 ),
