@@ -17,12 +17,27 @@ class MyApp extends StatelessWidget {
       title: 'Github App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
+        useMaterial3: false,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: grey100,
+          foregroundColor: grey600,
+          elevation: 0,
+          centerTitle: false,
+          titleTextStyle: TextStyle(
+            color: grey600,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+          iconTheme: IconThemeData(
+            color: primaryColor,
+          ),
+        ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Colors.white,
           selectedItemColor: primaryColor,
           unselectedItemColor: secondaryColor,
         ),
+        scaffoldBackgroundColor: grey100,
       ),
       navigatorKey: outerAppNavKey,
       routes: {
