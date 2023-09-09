@@ -16,7 +16,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Github App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: primaryColor,
+          primary: primaryColor,
+          secondary: secondaryColor,
+        ),
         useMaterial3: false,
         appBarTheme: const AppBarTheme(
           backgroundColor: grey100,
@@ -25,19 +29,52 @@ class MyApp extends StatelessWidget {
           centerTitle: false,
           titleTextStyle: TextStyle(
             color: grey600,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
           ),
           iconTheme: IconThemeData(
-            color: primaryColor,
+            color: secondaryColor,
+            size: 28,
           ),
+        ),
+        iconTheme: const IconThemeData(
+          color: secondaryColor,
+          size: 28,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Colors.white,
           selectedItemColor: primaryColor,
           unselectedItemColor: secondaryColor,
+          type: BottomNavigationBarType.fixed,
+          selectedIconTheme: IconThemeData(
+            color: primaryColor,
+            size: 28,
+          ),
+          unselectedIconTheme: IconThemeData(
+            color: secondaryColor,
+            size: 28,
+          ),
         ),
         scaffoldBackgroundColor: grey100,
+        tabBarTheme: const TabBarTheme(
+          labelColor: primaryColor,
+          unselectedLabelColor: grey400,
+          labelStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+          indicator: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: primaryColor,
+              ),
+            ),
+          ),
+        ),
       ),
       navigatorKey: outerAppNavKey,
       routes: {

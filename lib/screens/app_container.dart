@@ -67,7 +67,6 @@ class _AppContainerState extends State<AppContainer> {
             topRight: Radius.circular(24),
           ),
           child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
             currentIndex: currentTabIndex,
             items: const [
               BottomNavigationBarItem(
