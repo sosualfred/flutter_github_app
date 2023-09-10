@@ -24,7 +24,13 @@ class HomeScreen extends StatelessWidget {
               Iconsax.notification,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, '/analytics');
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Notification'),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
             },
           ),
         ],
