@@ -85,6 +85,8 @@ class RepoCard extends StatelessWidget {
                   fontSize: 12,
                   color: grey500,
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(
                 height: 8,

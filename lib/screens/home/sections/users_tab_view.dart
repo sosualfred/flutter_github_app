@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
+import 'package:flutter_github_app/providers/search_provider.dart';
 import 'package:flutter_github_app/services/graphql/search_queries.dart';
 import 'package:flutter_github_app/widgets/common/app_placeholder.dart';
+import 'package:flutter_github_app/widgets/common/results_count.dart';
 import 'package:flutter_github_app/widgets/home/user_card.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:ms_undraw/ms_undraw.dart';
 
-class UsersTabView extends StatelessWidget {
+class UsersTabView extends ConsumerWidget {
   const UsersTabView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final searchTerm = ref.watch(searchTermProvider);
+
+    const limit = 5;
+
     return Query(
       options: QueryOptions(
         document: gql(searchUsers),
-        variables: const {
-          'searchTerm': 'sosu',
-          'limit': 3,
+        variables: {
+          'searchTerm': searchTerm,
+          // Github GraphQL query is quite slow that's why we limit the results to 5
+          'limit': limit,
         },
       ),
       builder: (
@@ -36,7 +44,8 @@ class UsersTabView extends StatelessWidget {
           );
         }
 
-        if (result.data?['search']?['userCount'] == 0) {
+        bool showPlaceholder = result.isNotLoading && searchTerm.isEmpty;
+        if (showPlaceholder) {
           return const SingleChildScrollView(
             child: Column(
               children: [
@@ -44,10 +53,32 @@ class UsersTabView extends StatelessWidget {
                   height: 32,
                 ),
                 AppPlaceholder(
+                  title: Text(
+                    'What are you looking for?',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: grey500,
+                    ),
+                  ),
+                  illustration: UnDrawIllustration.searching,
+                ),
+              ],
+            ),
+          );
+        }
+
+        if (result.data?['search']?['userCount'] == 0) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 32,
+                ),
+                AppPlaceholder(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Cannot find any search result for ',
                         style: TextStyle(
                           fontSize: 14,
@@ -55,8 +86,8 @@ class UsersTabView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'abc',
-                        style: TextStyle(
+                        searchTerm,
+                        style: const TextStyle(
                           fontSize: 14,
                           color: grey800,
                         ),
@@ -72,79 +103,29 @@ class UsersTabView extends StatelessWidget {
 
         final users = result.data?['search']?['edges'];
 
-        // bool showPlaceholder = result.isNotLoading && searchTerm.isEmpty;
-        bool showPlaceholder = false;
-
-        return showPlaceholder
-            ? const SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 32,
-                    ),
-                    AppPlaceholder(
-                      title: Text(
-                        'What are you looking for?',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: grey500,
-                        ),
-                      ),
-                      illustration: UnDrawIllustration.searching,
-                    ),
-                  ],
-                ),
-              )
-            : Column(
-                children: [
-                  const Row(
-                    children: [
-                      Text(
-                        'Showing',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey400,
-                        ),
-                      ),
-                      Text(
-                        ' 30 results',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey800,
-                        ),
-                      ),
-                      Text(
-                        ' for',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey400,
-                        ),
-                      ),
-                      Text(
-                        ' chr',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey800,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: users.length,
-                      itemBuilder: (context, index) {
-                        return UserCard(
-                          user: users[index]?['node'],
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              );
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ResultsCount(
+              searchTerm: searchTerm,
+              resultsCount: result.data?['search']?['userCount'] ?? 0,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  return UserCard(
+                    user: users[index]?['node'],
+                  );
+                },
+              ),
+            ),
+          ],
+        );
       },
     );
   }

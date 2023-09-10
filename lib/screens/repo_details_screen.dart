@@ -4,6 +4,7 @@ import 'package:flutter_github_app/utils/formatters.dart';
 import 'package:flutter_github_app/widgets/common/app_back_button.dart';
 import 'package:flutter_github_app/widgets/common/chips.dart';
 import 'package:flutter_github_app/widgets/common/label.dart';
+import 'package:flutter_github_app/widgets/common/read_more.dart';
 import 'package:flutter_github_app/widgets/common/repo_langs_progress_bar.dart';
 
 class RepoDetailsScreen extends StatelessWidget {
@@ -109,9 +110,10 @@ class RepoDetailsScreen extends StatelessWidget {
                                     color: grey500,
                                   ),
                                 ),
-                                const SizedBox(height: 12),
-                                Text(
-                                  repo['description'] ?? '---',
+                                const SizedBox(height: 10),
+                                ReadMoreTextWidget(
+                                  text: repo['description'] ?? '---',
+                                  maxLines: 10,
                                   style: const TextStyle(
                                     fontSize: 14,
                                     color: grey700,

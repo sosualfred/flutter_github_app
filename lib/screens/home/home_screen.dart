@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
+import 'package:flutter_github_app/providers/search_provider.dart';
 import 'package:flutter_github_app/screens/home/sections/repos_tab_view.dart';
 import 'package:flutter_github_app/screens/home/sections/users_tab_view.dart';
+import 'package:flutter_github_app/utils/helpers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -26,56 +29,44 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: DefaultTabController(
           length: 2,
           initialIndex: 0,
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               // Search Field
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  fillColor: whiteColor,
-                  filled: true,
-                  prefixIcon: Icon(
-                    Iconsax.search_normal_1,
-                    color: secondaryColor,
-                    size: 26,
-                  ),
-                  contentPadding: EdgeInsets.all(10),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
+              Consumer(
+                builder: (context, ref, child) {
+                  return TextField(
+                    textInputAction: TextInputAction.search,
+                    onChanged: (searchTerm) {
+                      Debounce.debounce(() {
+                        ref
+                            .read(searchTermProvider.notifier)
+                            .setSearchTerm(searchTerm);
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Search',
+                      prefixIcon: Icon(
+                        Iconsax.search_normal_1,
+                        color: secondaryColor,
+                        size: 26,
+                      ),
                     ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
-                    ),
-                    borderSide: BorderSide(
-                      color: grey200,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
-                    ),
-                    borderSide: BorderSide(
-                      color: grey400,
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               // Tab Bar
-              SizedBox(
+              const SizedBox(
                 width: double.infinity,
                 child: TabBar(
                   isScrollable: true,
@@ -94,10 +85,10 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              Expanded(
+              const Expanded(
                 child: TabBarView(
                   children: [
                     UsersTabView(),
