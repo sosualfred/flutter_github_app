@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
+import 'package:flutter_github_app/models/repo_language.dart';
 import 'package:flutter_github_app/widgets/common/app_back_button.dart';
 import 'package:flutter_github_app/widgets/common/chips.dart';
 import 'package:flutter_github_app/widgets/common/label.dart';
+import 'package:flutter_github_app/widgets/common/repo_langs_progress_bar.dart';
 
 class RepoDetailsScreen extends StatelessWidget {
   const RepoDetailsScreen({super.key});
@@ -151,9 +153,49 @@ class RepoDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 12),
+                                RepoLangsProgressBar(
+                                  languages: [
+                                    RepoLanguage(
+                                      name: 'Kotlin',
+                                      value: 70523,
+                                    ),
+                                    RepoLanguage(
+                                      name: 'Java',
+                                      value: 24379,
+                                    ),
+                                    RepoLanguage(
+                                      name: 'Dart',
+                                      value: 16992,
+                                    ),
+                                    RepoLanguage(
+                                      name: 'Swift',
+                                      value: 3703,
+                                    ),
+                                    RepoLanguage(
+                                      name: 'Objective-C',
+                                      value: 1425,
+                                    ),
+                                    RepoLanguage(
+                                      name: 'C++',
+                                      value: 1158,
+                                    ),
+                                    RepoLanguage(
+                                      name: 'Shell',
+                                      value: 15158,
+                                    ),
+                                    RepoLanguage(
+                                      name: 'Python',
+                                      value: 1158,
+                                    ),
+                                    RepoLanguage(
+                                      name: 'Ruby',
+                                      value: 1158,
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
