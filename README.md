@@ -1,16 +1,11 @@
 # flutter_github_app
 
-A new Flutter project.
-
+A Flutter app for viewing GitHub users and their repositories.
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run this app you need to get a GitHub personal access token and add it to the `lib/constants/secrets.dart` file. You can get a token by following the instructions [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Search | User Details | Repository Details
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
