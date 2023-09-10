@@ -12,11 +12,11 @@ import 'package:ms_undraw/ms_undraw.dart';
 class ReposTabView extends ConsumerWidget {
   const ReposTabView({super.key});
 
+  final limit = 20;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchTerm = ref.watch(searchTermProvider);
-
-    const limit = 20;
 
     return Query(
       options: QueryOptions(
@@ -107,7 +107,9 @@ class ReposTabView extends ConsumerWidget {
           children: [
             ResultsCount(
               searchTerm: searchTerm,
-              resultsCount: result.data?['search']?['repositoryCount'] ?? 0,
+              // TODO: Implement Pagination later
+              // resultsCount: result.data?['search']?['repositoryCount'] ?? 0,
+              resultsCount: repos.length,
             ),
             const SizedBox(
               height: 16,

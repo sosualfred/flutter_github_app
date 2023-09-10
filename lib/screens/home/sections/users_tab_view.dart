@@ -12,18 +12,18 @@ import 'package:ms_undraw/ms_undraw.dart';
 class UsersTabView extends ConsumerWidget {
   const UsersTabView({super.key});
 
+  // Github GraphQL query is quite slow that's why we limit the results to 10
+  final limit = 10;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchTerm = ref.watch(searchTermProvider);
-
-    const limit = 5;
 
     return Query(
       options: QueryOptions(
         document: gql(searchUsers),
         variables: {
           'searchTerm': searchTerm,
-          // Github GraphQL query is quite slow that's why we limit the results to 5
           'limit': limit,
         },
       ),
@@ -108,7 +108,9 @@ class UsersTabView extends ConsumerWidget {
           children: [
             ResultsCount(
               searchTerm: searchTerm,
-              resultsCount: result.data?['search']?['userCount'] ?? 0,
+              // TODO: Implement Pagination later
+              // resultsCount: result.data?['search']?['userCount'] ?? 0,
+              resultsCount: users.length,
             ),
             const SizedBox(
               height: 16,

@@ -1,6 +1,10 @@
 String searchUsers = """
   query searchUsers(\$searchTerm: String!, \$limit: Int!) {
       search(query: \$searchTerm, type: USER, first: \$limit) {
+      pageInfo {
+        endCursor
+        startCursor
+      }
       userCount
       edges {
         node {
@@ -52,6 +56,10 @@ String searchUsers = """
 String searchRepo = """
   query searchRepo(\$searchTerm: String!, \$limit: Int!) {
     search(query: \$searchTerm, type: REPOSITORY, first: \$limit) {
+      pageInfo {
+        endCursor
+        startCursor
+      }
       repositoryCount
       edges {
         node {
