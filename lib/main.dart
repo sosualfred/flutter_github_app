@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/secrets.dart';
-import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
+import 'package:flutter_github_app/constants/themes.dart';
 import 'package:flutter_github_app/screens/app_container.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() async {
@@ -25,7 +26,9 @@ void main() async {
   runApp(
     GraphQLProvider(
       client: client,
-      child: const MyApp(),
+      child: const ProviderScope(
+        child: MyApp(),
+      ),
     ),
   );
 }
@@ -38,67 +41,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Github App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: primaryColor,
-          primary: primaryColor,
-          secondary: secondaryColor,
-        ),
-        useMaterial3: false,
-        scaffoldBackgroundColor: grey100,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: grey100,
-          foregroundColor: grey600,
-          elevation: 0,
-          centerTitle: false,
-          titleTextStyle: TextStyle(
-            color: grey600,
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-          iconTheme: IconThemeData(
-            color: secondaryColor,
-            size: 24,
-          ),
-        ),
-        iconTheme: const IconThemeData(
-          color: secondaryColor,
-          size: 24,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.white,
-          selectedItemColor: primaryColor,
-          unselectedItemColor: secondaryColor,
-          type: BottomNavigationBarType.fixed,
-          selectedIconTheme: IconThemeData(
-            color: primaryColor,
-            size: 24,
-          ),
-          unselectedIconTheme: IconThemeData(
-            color: secondaryColor,
-            size: 24,
-          ),
-        ),
-        tabBarTheme: const TabBarTheme(
-          labelColor: primaryColor,
-          unselectedLabelColor: grey400,
-          labelStyle: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          unselectedLabelStyle: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          indicator: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: primaryColor,
-              ),
-            ),
-          ),
-        ),
-      ),
+      theme: AppThemes.light,
+      darkTheme: AppThemes.dark,
+      themeMode: ThemeMode.light,
       navigatorKey: outerAppNavKey,
       routes: {
         AppContainer.routeName: (context) => const AppContainer(),
