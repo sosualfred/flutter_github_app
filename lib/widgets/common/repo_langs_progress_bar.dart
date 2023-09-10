@@ -26,6 +26,9 @@ class RepoLangsProgressBar extends StatelessWidget {
             label: Text(language.name),
             valueLabel: Text(
               "${(language.value / totalValue * 100).toStringAsFixed(1)}%",
+              style: TextStyle(
+                color: hexToColor(language.color),
+              ),
             ),
           ),
         )
@@ -44,6 +47,7 @@ class RepoLangsProgressBar extends StatelessWidget {
       barStyle: const SegmentedBarStyle(
         padding: EdgeInsets.all(0),
         size: 12,
+        gap: 0.1,
       ),
       legendItemBuilder: (segment) {
         return LegendItem(
