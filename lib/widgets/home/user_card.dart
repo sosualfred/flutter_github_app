@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/user_details_screen.dart';
-import 'package:flutter_github_app/widgets/common/chip_widget.dart';
+import 'package:flutter_github_app/widgets/common/chips.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class UserCard extends StatelessWidget {

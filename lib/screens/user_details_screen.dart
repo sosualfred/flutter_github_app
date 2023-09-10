@@ -132,7 +132,7 @@ class UserDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Expanded(
                       child: TabBarView(

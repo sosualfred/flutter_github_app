@@ -25,7 +25,7 @@ class AppBackButton extends StatelessWidget {
         child: const Icon(
           Iconsax.arrow_left_2,
           color: primaryColor,
-          size: 24,
+          size: 26,
         ),
       ),
     );
