@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
-import 'package:flutter_github_app/models/repo_language.dart';
+import 'package:flutter_github_app/utils/formatters.dart';
 import 'package:flutter_github_app/widgets/common/app_back_button.dart';
 import 'package:flutter_github_app/widgets/common/chips.dart';
 import 'package:flutter_github_app/widgets/common/label.dart';
 import 'package:flutter_github_app/widgets/common/repo_langs_progress_bar.dart';
 
 class RepoDetailsScreen extends StatelessWidget {
-  const RepoDetailsScreen({super.key});
+  const RepoDetailsScreen({
+    super.key,
+    required this.repo,
+  });
+
+  final Map repo;
 
   static const routeName = '/repo-details';
 
@@ -16,61 +21,63 @@ class RepoDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButton(),
-        actions: const [
+        actions: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.star_rounded,
                 color: secondaryColor,
                 size: 26,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 2,
               ),
               Text(
-                '5',
-                style: TextStyle(
+                formatNumberToCompact(repo['stargazerCount'] ?? 0),
+                style: const TextStyle(
                   fontSize: 16,
                   color: secondaryColor,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
             ],
           ),
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Kotlin DSL',
-                  style: TextStyle(
+                  repo['name'] ?? '---',
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: grey800,
                   ),
                 ),
                 Label(
-                  label: 'Public',
+                  label: repo['visibility'] != null
+                      ? capitalize(repo['visibility'])
+                      : '---',
                   color: primaryColor,
                   fontSize: 14,
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             DefaultTabController(
               length: 1,
               child: Expanded(
                 child: Column(
                   children: [
                     // Tab Bar
-                    SizedBox(
+                    const SizedBox(
                       width: double.infinity,
                       child: TabBar(
                         isScrollable: true,
@@ -85,7 +92,7 @@ class RepoDetailsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     Expanded(
@@ -95,101 +102,68 @@ class RepoDetailsScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Description',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: grey500,
                                   ),
                                 ),
-                                SizedBox(height: 12),
+                                const SizedBox(height: 12),
                                 Text(
-                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pretium odio metus, feugiat mattis metus consequat non. Suspendisse faucibus efficitur fringilla.',
-                                  style: TextStyle(
+                                  repo['description'] ?? '---',
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: grey700,
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Chips(
-                                  labels: [
-                                    'javascript',
-                                    'html',
-                                    'css',
-                                    'php',
-                                  ],
                                   color: primaryColor,
+                                  labels: generateLangStrings(
+                                    langs: repo['languages']?['edges'] ?? [],
+                                    limit: 30,
+                                  ),
                                 ),
-                                SizedBox(height: 24),
-                                Text(
+                                const SizedBox(height: 24),
+                                const Text(
                                   'Releases',
                                   style: TextStyle(
                                     color: grey500,
                                     fontSize: 16,
                                   ),
                                 ),
-                                SizedBox(height: 12),
+                                const SizedBox(height: 12),
                                 Text(
-                                  '1.1.10',
-                                  style: TextStyle(
+                                  repo['latestRelease']?['tagName'] ?? '---',
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: grey700,
                                   ),
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
-                                  'Dec 21, 2022',
-                                  style: TextStyle(
+                                  formatDateToLong(
+                                    repo['latestRelease']?['createdAt'],
+                                  ),
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: grey500,
                                   ),
                                 ),
-                                SizedBox(height: 24),
-                                Text(
+                                const SizedBox(height: 24),
+                                const Text(
                                   'Languages',
                                   style: TextStyle(
                                     color: grey500,
                                     fontSize: 16,
                                   ),
                                 ),
-                                SizedBox(height: 12),
+                                const SizedBox(height: 12),
                                 RepoLangsProgressBar(
                                   languages: [
-                                    RepoLanguage(
-                                      name: 'Kotlin',
-                                      value: 70523,
-                                    ),
-                                    RepoLanguage(
-                                      name: 'Java',
-                                      value: 24379,
-                                    ),
-                                    RepoLanguage(
-                                      name: 'Dart',
-                                      value: 16992,
-                                    ),
-                                    RepoLanguage(
-                                      name: 'Swift',
-                                      value: 3703,
-                                    ),
-                                    RepoLanguage(
-                                      name: 'Objective-C',
-                                      value: 1425,
-                                    ),
-                                    RepoLanguage(
-                                      name: 'C++',
-                                      value: 1158,
-                                    ),
-                                    RepoLanguage(
-                                      name: 'Shell',
-                                      value: 15158,
-                                    ),
-                                    RepoLanguage(
-                                      name: 'Python',
-                                      value: 1158,
-                                    ),
-                                    RepoLanguage(
-                                      name: 'Ruby',
-                                      value: 1158,
+                                    ...generateRepoLangs(
+                                      langs: repo['languages']?['edges'] ?? [],
                                     ),
                                   ],
                                 ),

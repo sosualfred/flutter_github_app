@@ -13,12 +13,16 @@ String searchUsers = """
             followers {
               totalCount
             }
+            following {
+              totalCount
+            }
             location
-            repositories(first: 100, orderBy: {field: PUSHED_AT, direction: DESC}) {
+            repositories(first: 20, orderBy: {field: PUSHED_AT, direction: DESC}) {
               edges {
                 node {
                   name
                   stargazerCount
+                  visibility
                   description
                   updatedAt
                   languages(first: 10) {

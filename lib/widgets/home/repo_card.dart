@@ -2,16 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/repo_details_screen.dart';
+import 'package:flutter_github_app/utils/formatters.dart';
 import 'package:flutter_github_app/widgets/common/chips.dart';
 
 class RepoCard extends StatelessWidget {
-  const RepoCard({super.key});
+  const RepoCard({
+    super.key,
+    required this.repo,
+  });
+
+  final Map repo;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        innerAppNavKey.currentState!.pushNamed(RepoDetailsScreen.routeName);
+        innerAppNavKey.currentState!.push(
+          MaterialPageRoute(
+            builder: (_) => RepoDetailsScreen(
+              repo: repo,
+            ),
+          ),
+        );
       },
       child: Card(
         elevation: 0.5,
@@ -21,8 +33,8 @@ class RepoCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(
           vertical: 8,
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(10),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,9 +45,9 @@ class RepoCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Kotlin DSL',
-                        style: TextStyle(
-                          fontSize: 16,
+                        repo['name'] ?? '---',
+                        style: const TextStyle(
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: grey800,
                         ),
@@ -44,17 +56,17 @@ class RepoCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.star_rounded,
                         color: secondaryColor,
                         size: 17,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 2,
                       ),
                       Text(
-                        '4',
-                        style: TextStyle(
+                        formatNumberToCompact(repo['stargazerCount'] ?? 0),
+                        style: const TextStyle(
                           fontSize: 14,
                           color: secondaryColor,
                         ),
@@ -63,32 +75,34 @@ class RepoCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               // Role, Company Row
               Text(
-                'Smart like Sheldon cooper? Join in',
-                style: TextStyle(
-                  fontSize: 14,
+                repo['description'] ?? '---',
+                style: const TextStyle(
+                  fontSize: 12,
                   color: grey500,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               // Tags Row
               Chips(
                 color: primaryColor,
-                labels: ['javascript', 'html', 'css', 'php', 'java'],
+                labels: generateLangStrings(
+                  langs: repo['languages']?['edges'] ?? [],
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               // Location Row
               Text(
-                'Updated 10/08/2022',
-                style: TextStyle(
+                'Updated ${formatDate(repo['updatedAt'])}',
+                style: const TextStyle(
                   fontSize: 12,
                   color: grey500,
                 ),

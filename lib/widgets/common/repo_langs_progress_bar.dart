@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/models/repo_language.dart';
+import 'package:flutter_github_app/utils/formatters.dart';
 import 'package:primer_progress_bar/primer_progress_bar.dart';
 
 class RepoLangsProgressBar extends StatelessWidget {
@@ -22,8 +22,7 @@ class RepoLangsProgressBar extends StatelessWidget {
         .map(
           (language) => Segment(
             value: language.value,
-            color: languageColors[
-                languages.indexOf(language) % languageColors.length],
+            color: hexToColor(language.color),
             label: Text(language.name),
             valueLabel: Text(
               "${(language.value / totalValue * 100).toStringAsFixed(1)}%",
@@ -36,7 +35,7 @@ class RepoLangsProgressBar extends StatelessWidget {
       segments: segments,
       maxTotalValue: totalValue,
       legendStyle: const SegmentedBarLegendStyle(
-        maxLines: 2,
+        maxLines: 5,
         padding: EdgeInsets.symmetric(
           horizontal: 0,
           vertical: 10,

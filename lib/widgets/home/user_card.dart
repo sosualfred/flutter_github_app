@@ -18,7 +18,13 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        innerAppNavKey.currentState!.pushNamed(UserDetailsScreen.routeName);
+        innerAppNavKey.currentState!.push(
+          MaterialPageRoute(
+            builder: (_) => UserDetailsScreen(
+              user: user,
+            ),
+          ),
+        );
       },
       child: Card(
         elevation: 0.5,
@@ -40,7 +46,7 @@ class UserCard extends StatelessWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                        radius: 14,
+                        radius: 11,
                         backgroundImage: NetworkImage(
                           user['avatarUrl'] ??
                               'https://avatars.githubusercontent.com/u/583231?v=4',
@@ -50,9 +56,9 @@ class UserCard extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        user['name'] ?? 'No name',
+                        user['name'] ?? '---',
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: grey800,
                         ),
@@ -60,9 +66,9 @@ class UserCard extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '${formatNumberToCompact(user['followers']['totalCount'] ?? 0)} followers',
+                    '${formatNumberToCompact(user['followers']?['totalCount'] ?? 0)} followers',
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: secondaryColor,
                     ),
                   ),
@@ -85,8 +91,9 @@ class UserCard extends StatelessWidget {
               // Tags Row
               Chips(
                 color: appBlue,
-                labels: generateRepoLangs(
-                    repos: user['repositories']['edges'] ?? []),
+                labels: generateUserLangsStrings(
+                  repos: user['repositories']?['edges'] ?? [],
+                ),
               ),
               const SizedBox(
                 height: 6,

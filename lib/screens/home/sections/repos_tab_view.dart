@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/widgets/common/app_placeholder.dart';
-import 'package:flutter_github_app/widgets/home/repo_card.dart';
 import 'package:ms_undraw/ms_undraw.dart';
 
 class ReposTabView extends StatelessWidget {
@@ -102,7 +101,7 @@ class ReposTabView extends StatelessWidget {
             shrinkWrap: true,
             itemCount: 10,
             itemBuilder: (context, index) {
-              return const RepoCard();
+              // return const RepoCard();
             },
           ),
         ),

@@ -3,9 +3,7 @@ import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/analytics_screen.dart';
 import 'package:flutter_github_app/screens/home/home_screen.dart';
-import 'package:flutter_github_app/screens/repo_details_screen.dart';
 import 'package:flutter_github_app/screens/settings_screen.dart';
-import 'package:flutter_github_app/screens/user_details_screen.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class AppContainer extends StatefulWidget {
@@ -38,12 +36,6 @@ class _AppContainerState extends State<AppContainer> {
               break;
             case SettingsScreen.routeName:
               page = const SettingsScreen();
-              break;
-            case UserDetailsScreen.routeName:
-              page = const UserDetailsScreen();
-              break;
-            case RepoDetailsScreen.routeName:
-              page = const RepoDetailsScreen();
               break;
             default:
               page = const HomeScreen();

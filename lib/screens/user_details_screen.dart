@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
+import 'package:flutter_github_app/utils/formatters.dart';
 import 'package:flutter_github_app/widgets/common/app_back_button.dart';
 import 'package:flutter_github_app/widgets/home/repo_card.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class UserDetailsScreen extends StatelessWidget {
-  const UserDetailsScreen({super.key});
+  const UserDetailsScreen({
+    super.key,
+    required this.user,
+  });
+
+  final Map user;
 
   static const routeName = '/user-details';
 
@@ -33,56 +39,57 @@ class UserDetailsScreen extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  'https://avatars.githubusercontent.com/u/583231?v=4',
+                  user['avatarUrl'] ??
+                      'https://avatars.githubusercontent.com/u/583231?v=4',
                   fit: BoxFit.fitWidth,
                   alignment: Alignment.center,
                 ),
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'Christopher Marcus',
-              style: TextStyle(
+            Text(
+              user['name'] ?? '---',
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 color: grey800,
               ),
             ),
             const SizedBox(height: 4),
-            const Text(
-              'Effects studio engineering lead',
-              style: TextStyle(
+            Text(
+              '${(user['bio'].toString().isNotEmpty && user['bio'] != null) ? user['bio'] : '---'}',
+              style: const TextStyle(
                 fontSize: 14,
                 color: grey500,
               ),
             ),
             const SizedBox(height: 16),
             // Following Row
-            const Row(
+            Row(
               children: [
-                Icon(
+                const Icon(
                   Iconsax.profile_2user,
                   size: 21,
                   color: grey500,
                 ),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text(
-                  '1.2k followers',
-                  style: TextStyle(
+                  '${formatNumberToCompact(user['followers']?['totalCount'] ?? 0)} followers',
+                  style: const TextStyle(
                     fontSize: 14,
                     color: grey500,
                   ),
                 ),
-                SizedBox(width: 6),
-                Icon(
+                const SizedBox(width: 6),
+                const Icon(
                   Icons.circle,
                   size: 5,
                   color: grey500,
                 ),
-                SizedBox(width: 6),
+                const SizedBox(width: 6),
                 Text(
-                  '3 Following',
-                  style: TextStyle(
+                  '${formatNumberToCompact(user['following']?['totalCount'] ?? 0)} following',
+                  style: const TextStyle(
                     fontSize: 14,
                     color: grey500,
                   ),
@@ -91,17 +98,17 @@ class UserDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             // Location Row
-            const Row(
+            Row(
               children: [
-                Icon(
+                const Icon(
                   Iconsax.location,
                   size: 21,
                   color: grey500,
                 ),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text(
-                  'Accra, Ghana',
-                  style: TextStyle(
+                  user['location'] ?? 'Not available',
+                  style: const TextStyle(
                     fontSize: 14,
                     color: grey500,
                   ),
@@ -110,44 +117,50 @@ class UserDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             // Repositories Section
-            DefaultTabController(
-              length: 1,
-              child: Expanded(
-                child: Column(
-                  children: [
-                    // Tab Bar
-                    const SizedBox(
-                      width: double.infinity,
-                      child: TabBar(
-                        isScrollable: true,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        tabAlignment: TabAlignment.start,
-                        labelPadding: EdgeInsets.only(right: 12),
-                        tabs: [
-                          Tab(
-                            text: ' Repositories ',
-                            height: 32,
-                          ),
-                        ],
+            Visibility(
+              visible: user['repositories']?['edges']?.length != 0,
+              child: DefaultTabController(
+                length: 1,
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      // Tab Bar
+                      const SizedBox(
+                        width: double.infinity,
+                        child: TabBar(
+                          isScrollable: true,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          tabAlignment: TabAlignment.start,
+                          labelPadding: EdgeInsets.only(right: 12),
+                          tabs: [
+                            Tab(
+                              text: ' Repositories ',
+                              height: 32,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          ListView.builder(
-                            itemCount: 10,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return const RepoCard();
-                            },
-                          )
-                        ],
+                      const SizedBox(
+                        height: 12,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            ListView.builder(
+                              itemCount: user['repositories']?['edges']?.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return RepoCard(
+                                  repo: user['repositories']?['edges']?[index]
+                                      ?['node'],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

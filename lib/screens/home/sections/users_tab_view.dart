@@ -87,13 +87,13 @@ class UsersTabView extends StatelessWidget {
           );
         }
 
-        if (result.data?['search']['userCount'] == 0) {
+        if (result.data?['search']?['userCount'] == 0) {
           return const Center(
             child: Text("No todo items yet"),
           );
         }
 
-        final users = result.data?['search']['edges'];
+        final users = result.data?['search']?['edges'];
 
         return Column(
           children: [
@@ -138,7 +138,7 @@ class UsersTabView extends StatelessWidget {
                 itemCount: users.length,
                 itemBuilder: (context, index) {
                   return UserCard(
-                    user: users[index]['node'],
+                    user: users[index]?['node'],
                   );
                 },
               ),
