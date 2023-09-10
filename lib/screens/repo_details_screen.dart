@@ -160,12 +160,18 @@ class RepoDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 12),
-                                RepoLangsProgressBar(
-                                  languages: [
-                                    ...generateRepoLangs(
-                                      langs: repo['languages']?['edges'] ?? [],
-                                    ),
-                                  ],
+                                Visibility(
+                                  visible:
+                                      repo['languages']?['edges'].isNotEmpty ??
+                                          false,
+                                  child: RepoLangsProgressBar(
+                                    languages: [
+                                      ...generateRepoLangs(
+                                        langs:
+                                            repo['languages']?['edges'] ?? [],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
