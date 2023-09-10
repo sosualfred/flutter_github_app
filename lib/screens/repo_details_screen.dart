@@ -59,7 +59,7 @@ class RepoDetailsScreen extends StatelessWidget {
                 Label(
                   label: 'Public',
                   color: primaryColor,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ],
             ),
