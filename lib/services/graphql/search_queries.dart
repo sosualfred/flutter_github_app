@@ -48,3 +48,36 @@ String searchUsers = """
     }
   }
 """;
+
+String searchRepo = """
+  query searchRepo(\$searchTerm: String!, \$limit: Int!) {
+    search(query: \$searchTerm, type: REPOSITORY, first: \$limit) {
+      repositoryCount
+      edges {
+        node {
+          ... on Repository {
+            name
+            stargazerCount
+            description
+            updatedAt
+            visibility
+            languages(first: 10) {
+              edges {
+                size
+                node {
+                  name
+                  color
+                }
+              }
+            }
+            latestRelease {
+              name
+              createdAt
+              tagName
+            }
+          }
+        }
+      }
+    }
+  }
+""";
