@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/widgets/common/chips.dart';
-import 'package:flutter_github_app/widgets/common/label.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
