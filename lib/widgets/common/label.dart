@@ -5,7 +5,7 @@ class Label extends StatelessWidget {
     super.key,
     required this.label,
     required this.color,
-    this.fontSize = 14,
+    this.fontSize = 12,
   });
 
   final String label;

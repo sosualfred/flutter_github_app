@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github_app/constants/api.dart';
 import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/app_container.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await initHiveForFlutter();
+
+  final GraphQLClient graphQLClient = GraphQLClient(
+    link: HttpLink(
+      'https://api.github.com/graphql',
+      defaultHeaders: {
+        'Authorization': 'bearer $githubToken',
+      },
+    ),
+    cache: GraphQLCache(
+      store: HiveStore(),
+    ),
+  );
+
+  final client = ValueNotifier(graphQLClient);
+
+  runApp(
+    GraphQLProvider(
+      client: client,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

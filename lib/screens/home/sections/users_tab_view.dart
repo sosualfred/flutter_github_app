@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
+import 'package:flutter_github_app/services/graphql/search_queries.dart';
 import 'package:flutter_github_app/widgets/common/app_placeholder.dart';
 import 'package:flutter_github_app/widgets/home/user_card.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:ms_undraw/ms_undraw.dart';
 
 class UsersTabView extends StatelessWidget {
@@ -60,53 +62,90 @@ class UsersTabView extends StatelessWidget {
       ),
     );
 
-    return Column(
-      children: [
-        const Row(
+    return Query(
+      options: QueryOptions(
+        document: gql(searchUsers),
+        variables: const {
+          'searchTerm': 'sosu',
+          'limit': 3,
+        },
+      ),
+      builder: (
+        QueryResult result, {
+        VoidCallback? refetch,
+        FetchMore? fetchMore,
+      }) {
+        if (result.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (result.hasException) {
+          return Center(
+            child: Text(result.exception.toString()),
+          );
+        }
+
+        if (result.data?['search']['userCount'] == 0) {
+          return const Center(
+            child: Text("No todo items yet"),
+          );
+        }
+
+        final users = result.data?['search']['edges'];
+
+        return Column(
           children: [
-            Text(
-              'Showing',
-              style: TextStyle(
-                fontSize: 16,
-                color: grey400,
-              ),
+            const Row(
+              children: [
+                Text(
+                  'Showing',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: grey400,
+                  ),
+                ),
+                Text(
+                  ' 30 results',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: grey800,
+                  ),
+                ),
+                Text(
+                  ' for',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: grey400,
+                  ),
+                ),
+                Text(
+                  ' chr',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: grey800,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              ' 30 results',
-              style: TextStyle(
-                fontSize: 16,
-                color: grey800,
-              ),
+            const SizedBox(
+              height: 16,
             ),
-            Text(
-              ' for',
-              style: TextStyle(
-                fontSize: 16,
-                color: grey400,
-              ),
-            ),
-            Text(
-              ' chr',
-              style: TextStyle(
-                fontSize: 16,
-                color: grey800,
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  return UserCard(
+                    user: users[index]['node'],
+                  );
+                },
               ),
             ),
           ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return const UserCard();
-            },
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

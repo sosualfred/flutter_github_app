@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_github_app/constants/colors.dart';
 import 'package:flutter_github_app/constants/keys.dart';
 import 'package:flutter_github_app/screens/user_details_screen.dart';
+import 'package:flutter_github_app/utils/formatters.dart';
 import 'package:flutter_github_app/widgets/common/chips.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class UserCard extends StatelessWidget {
-  const UserCard({super.key});
+  const UserCard({
+    super.key,
+    required this.user,
+  });
+
+  final Map user;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +28,8 @@ class UserCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(
           vertical: 8,
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(10),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,15 +42,16 @@ class UserCard extends StatelessWidget {
                       CircleAvatar(
                         radius: 14,
                         backgroundImage: NetworkImage(
-                          'https://avatars.githubusercontent.com/u/583231?v=4',
+                          user['avatarUrl'] ??
+                              'https://avatars.githubusercontent.com/u/583231?v=4',
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 6,
                       ),
                       Text(
-                        'Christopher Marcus',
-                        style: TextStyle(
+                        user['name'] ?? 'No name',
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: grey800,
@@ -53,50 +60,51 @@ class UserCard extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '1.2k followers',
-                    style: TextStyle(
+                    '${formatNumberToCompact(user['followers']['totalCount'] ?? 0)} followers',
+                    style: const TextStyle(
                       fontSize: 16,
                       color: secondaryColor,
                     ),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               // Role, Company Row
               Text(
-                'Engineering lead at effectstudios',
-                style: TextStyle(
+                '${(user['bio'].toString().isNotEmpty && user['bio'] != null) ? user['bio'] : '---'}',
+                style: const TextStyle(
                   fontSize: 14,
                   color: grey500,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               // Tags Row
               Chips(
                 color: appBlue,
-                labels: ['flutter', 'frontend', 'dart'],
+                labels: generateRepoLangs(
+                    repos: user['repositories']['edges'] ?? []),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               // Location Row
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Iconsax.location,
                     color: grey500,
                     size: 14,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 4,
                   ),
                   Text(
-                    'Berlin, Germany',
-                    style: TextStyle(
+                    user['location'] ?? 'Not available',
+                    style: const TextStyle(
                       fontSize: 12,
                       color: grey500,
                     ),
