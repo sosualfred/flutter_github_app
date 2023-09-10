@@ -6,12 +6,12 @@ class ReadMoreTextWidget extends StatefulWidget {
     Key? key,
     required this.text,
     this.style,
-    this.maxLines,
+    this.maxLines = 2,
     this.shouldExpand = true,
   }) : super(key: key);
   final String text;
   final TextStyle? style;
-  final int? maxLines;
+  final int maxLines;
   final bool shouldExpand;
 
   @override
@@ -20,6 +20,8 @@ class ReadMoreTextWidget extends StatefulWidget {
 
 class _ReadMoreTextWidgetState extends State<ReadMoreTextWidget> {
   bool isCollapsed = true;
+
+  bool showReadMore = false;
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -49,7 +51,7 @@ class _ReadMoreTextWidgetState extends State<ReadMoreTextWidget> {
         );
         final textPainter = TextPainter(
           text: link,
-          maxLines: widget.maxLines ?? 2,
+          maxLines: widget.maxLines,
           textDirection: Directionality.of(context),
         );
         textPainter.layout(minWidth: constraints.minWidth, maxWidth: maxWidth);
@@ -60,6 +62,8 @@ class _ReadMoreTextWidgetState extends State<ReadMoreTextWidget> {
         final textSize = textPainter.size;
 
         int? endIndex;
+
+        showReadMore = textPainter.didExceedMaxLines;
 
         if (linkSize.width < maxWidth) {
           final pos = textPainter.getPositionForOffset(
@@ -75,14 +79,17 @@ class _ReadMoreTextWidgetState extends State<ReadMoreTextWidget> {
           );
           endIndex = pos.offset;
         }
+        final displayedText = (isCollapsed && showReadMore)
+            ? widget.text.substring(0, endIndex)
+            : widget.text;
+
         return RichText(
           softWrap: true,
           overflow: TextOverflow.clip,
           text: TextSpan(
-            text:
-                isCollapsed ? widget.text.substring(0, endIndex) : widget.text,
+            text: displayedText,
             style: widget.style,
-            children: <TextSpan>[link],
+            children: [if (showReadMore) link],
           ),
         );
       },
